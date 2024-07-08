@@ -4,3 +4,4 @@ export 'ui_margin.dart';
 export 'recipe_card_big.dart';
 export 'recipe_card_small.dart';
 export 'unimplemented_dialog.dart';
+export 'transparent_gesture_detector.dart';

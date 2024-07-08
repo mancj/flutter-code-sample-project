@@ -10,12 +10,13 @@ class RecipeRestService implements IRecipeRestService {
   RecipeRestService(this._dio);
 
   @override
-  Future<List<Recipe>> searchRecipes(String query) async {
+  Future<List<Recipe>> searchRecipes(String query, int limit) async {
     var response = await _dio.get(
       'recipes/complexSearch',
       queryParameters: {
         'query': query,
         'addRecipeInformation': true,
+        'number': limit,
       },
     );
     var recipes = RecipeResults.fromJson(response.data);

@@ -5,3 +5,5 @@
 ### TODO
 - Single error handler
 - Handle API errors
+- Infinite search in following pages:
+  - Recipe search page

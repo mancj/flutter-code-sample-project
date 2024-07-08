@@ -315,6 +315,12 @@ mixin _$Recipe {
   String get title => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   int get readyInMinutes => throw _privateConstructorUsedError;
+  String? get summary => throw _privateConstructorUsedError;
+  double? get spoonacularScore => throw _privateConstructorUsedError;
+  int? get aggregateLikes => throw _privateConstructorUsedError;
+  List<String>? get cuisines => throw _privateConstructorUsedError;
+  List<String>? get dishTypes => throw _privateConstructorUsedError;
+  List<String>? get diets => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -326,7 +332,17 @@ abstract class $RecipeCopyWith<$Res> {
   factory $RecipeCopyWith(Recipe value, $Res Function(Recipe) then) =
       _$RecipeCopyWithImpl<$Res, Recipe>;
   @useResult
-  $Res call({int id, String title, String image, int readyInMinutes});
+  $Res call(
+      {int id,
+      String title,
+      String image,
+      int readyInMinutes,
+      String? summary,
+      double? spoonacularScore,
+      int? aggregateLikes,
+      List<String>? cuisines,
+      List<String>? dishTypes,
+      List<String>? diets});
 }
 
 /// @nodoc
@@ -346,6 +362,12 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
     Object? title = null,
     Object? image = null,
     Object? readyInMinutes = null,
+    Object? summary = freezed,
+    Object? spoonacularScore = freezed,
+    Object? aggregateLikes = freezed,
+    Object? cuisines = freezed,
+    Object? dishTypes = freezed,
+    Object? diets = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -364,6 +386,30 @@ class _$RecipeCopyWithImpl<$Res, $Val extends Recipe>
           ? _value.readyInMinutes
           : readyInMinutes // ignore: cast_nullable_to_non_nullable
               as int,
+      summary: freezed == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
+              as String?,
+      spoonacularScore: freezed == spoonacularScore
+          ? _value.spoonacularScore
+          : spoonacularScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      aggregateLikes: freezed == aggregateLikes
+          ? _value.aggregateLikes
+          : aggregateLikes // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cuisines: freezed == cuisines
+          ? _value.cuisines
+          : cuisines // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      dishTypes: freezed == dishTypes
+          ? _value.dishTypes
+          : dishTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      diets: freezed == diets
+          ? _value.diets
+          : diets // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -375,7 +421,17 @@ abstract class _$$RecipeImplCopyWith<$Res> implements $RecipeCopyWith<$Res> {
       __$$RecipeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String title, String image, int readyInMinutes});
+  $Res call(
+      {int id,
+      String title,
+      String image,
+      int readyInMinutes,
+      String? summary,
+      double? spoonacularScore,
+      int? aggregateLikes,
+      List<String>? cuisines,
+      List<String>? dishTypes,
+      List<String>? diets});
 }
 
 /// @nodoc
@@ -393,6 +449,12 @@ class __$$RecipeImplCopyWithImpl<$Res>
     Object? title = null,
     Object? image = null,
     Object? readyInMinutes = null,
+    Object? summary = freezed,
+    Object? spoonacularScore = freezed,
+    Object? aggregateLikes = freezed,
+    Object? cuisines = freezed,
+    Object? dishTypes = freezed,
+    Object? diets = freezed,
   }) {
     return _then(_$RecipeImpl(
       id: null == id
@@ -411,6 +473,30 @@ class __$$RecipeImplCopyWithImpl<$Res>
           ? _value.readyInMinutes
           : readyInMinutes // ignore: cast_nullable_to_non_nullable
               as int,
+      summary: freezed == summary
+          ? _value.summary
+          : summary // ignore: cast_nullable_to_non_nullable
+              as String?,
+      spoonacularScore: freezed == spoonacularScore
+          ? _value.spoonacularScore
+          : spoonacularScore // ignore: cast_nullable_to_non_nullable
+              as double?,
+      aggregateLikes: freezed == aggregateLikes
+          ? _value.aggregateLikes
+          : aggregateLikes // ignore: cast_nullable_to_non_nullable
+              as int?,
+      cuisines: freezed == cuisines
+          ? _value._cuisines
+          : cuisines // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      dishTypes: freezed == dishTypes
+          ? _value._dishTypes
+          : dishTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      diets: freezed == diets
+          ? _value._diets
+          : diets // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -422,7 +508,16 @@ class _$RecipeImpl implements _Recipe {
       {required this.id,
       required this.title,
       required this.image,
-      required this.readyInMinutes});
+      required this.readyInMinutes,
+      this.summary,
+      this.spoonacularScore,
+      this.aggregateLikes,
+      final List<String>? cuisines,
+      final List<String>? dishTypes,
+      final List<String>? diets})
+      : _cuisines = cuisines,
+        _dishTypes = dishTypes,
+        _diets = diets;
 
   factory _$RecipeImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeImplFromJson(json);
@@ -435,10 +530,45 @@ class _$RecipeImpl implements _Recipe {
   final String image;
   @override
   final int readyInMinutes;
+  @override
+  final String? summary;
+  @override
+  final double? spoonacularScore;
+  @override
+  final int? aggregateLikes;
+  final List<String>? _cuisines;
+  @override
+  List<String>? get cuisines {
+    final value = _cuisines;
+    if (value == null) return null;
+    if (_cuisines is EqualUnmodifiableListView) return _cuisines;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _dishTypes;
+  @override
+  List<String>? get dishTypes {
+    final value = _dishTypes;
+    if (value == null) return null;
+    if (_dishTypes is EqualUnmodifiableListView) return _dishTypes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _diets;
+  @override
+  List<String>? get diets {
+    final value = _diets;
+    if (value == null) return null;
+    if (_diets is EqualUnmodifiableListView) return _diets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Recipe(id: $id, title: $title, image: $image, readyInMinutes: $readyInMinutes)';
+    return 'Recipe(id: $id, title: $title, image: $image, readyInMinutes: $readyInMinutes, summary: $summary, spoonacularScore: $spoonacularScore, aggregateLikes: $aggregateLikes, cuisines: $cuisines, dishTypes: $dishTypes, diets: $diets)';
   }
 
   @override
@@ -450,13 +580,32 @@ class _$RecipeImpl implements _Recipe {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.readyInMinutes, readyInMinutes) ||
-                other.readyInMinutes == readyInMinutes));
+                other.readyInMinutes == readyInMinutes) &&
+            (identical(other.summary, summary) || other.summary == summary) &&
+            (identical(other.spoonacularScore, spoonacularScore) ||
+                other.spoonacularScore == spoonacularScore) &&
+            (identical(other.aggregateLikes, aggregateLikes) ||
+                other.aggregateLikes == aggregateLikes) &&
+            const DeepCollectionEquality().equals(other._cuisines, _cuisines) &&
+            const DeepCollectionEquality()
+                .equals(other._dishTypes, _dishTypes) &&
+            const DeepCollectionEquality().equals(other._diets, _diets));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, image, readyInMinutes);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      image,
+      readyInMinutes,
+      summary,
+      spoonacularScore,
+      aggregateLikes,
+      const DeepCollectionEquality().hash(_cuisines),
+      const DeepCollectionEquality().hash(_dishTypes),
+      const DeepCollectionEquality().hash(_diets));
 
   @JsonKey(ignore: true)
   @override
@@ -477,7 +626,13 @@ abstract class _Recipe implements Recipe {
       {required final int id,
       required final String title,
       required final String image,
-      required final int readyInMinutes}) = _$RecipeImpl;
+      required final int readyInMinutes,
+      final String? summary,
+      final double? spoonacularScore,
+      final int? aggregateLikes,
+      final List<String>? cuisines,
+      final List<String>? dishTypes,
+      final List<String>? diets}) = _$RecipeImpl;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$RecipeImpl.fromJson;
 
@@ -489,6 +644,18 @@ abstract class _Recipe implements Recipe {
   String get image;
   @override
   int get readyInMinutes;
+  @override
+  String? get summary;
+  @override
+  double? get spoonacularScore;
+  @override
+  int? get aggregateLikes;
+  @override
+  List<String>? get cuisines;
+  @override
+  List<String>? get dishTypes;
+  @override
+  List<String>? get diets;
   @override
   @JsonKey(ignore: true)
   _$$RecipeImplCopyWith<_$RecipeImpl> get copyWith =>

@@ -1,6 +1,7 @@
 import 'package:flutter_sample_app/domain/api/recipe_rest_service.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/getx/base/base_controller.dart';
+import 'package:flutter_sample_app/presentation/getx/pages/recipe_details/recipe_details_page.dart';
 import 'package:flutter_sample_app/presentation/getx/pages/search_recipes/search_recipes_page.dart';
 import 'package:get/get.dart';
 
@@ -80,6 +81,13 @@ class MainController extends BaseController {
         _popularRecipesCategory.refresh();
       },
       loadingFlag: _isPopularRecipesCategoryLoading,
+    );
+  }
+
+  void showRecipeDetails(Recipe recipe) {
+    Get.toNamed(
+      RecipeDetailsPage.routeName,
+      arguments: RecipeDetailsPageArgs(recipe: recipe),
     );
   }
 }

@@ -30,6 +30,12 @@ class Recipe with _$Recipe {
     required String title,
     required String image,
     required int readyInMinutes,
+    String? summary,
+    double? spoonacularScore,
+    int? aggregateLikes,
+    List<String>? cuisines,
+    List<String>? dishTypes,
+    List<String>? diets,
   }) = _Recipe;
 
   factory Recipe.fromJson(dynamic json) => _$RecipeFromJson(json);

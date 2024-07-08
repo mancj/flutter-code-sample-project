@@ -33,6 +33,17 @@ _$RecipeImpl _$$RecipeImplFromJson(Map<String, dynamic> json) => _$RecipeImpl(
       title: json['title'] as String,
       image: json['image'] as String,
       readyInMinutes: (json['readyInMinutes'] as num).toInt(),
+      summary: json['summary'] as String?,
+      spoonacularScore: (json['spoonacularScore'] as num?)?.toDouble(),
+      aggregateLikes: (json['aggregateLikes'] as num?)?.toInt(),
+      cuisines: (json['cuisines'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      dishTypes: (json['dishTypes'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      diets:
+          (json['diets'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$RecipeImplToJson(_$RecipeImpl instance) =>
@@ -41,4 +52,10 @@ Map<String, dynamic> _$$RecipeImplToJson(_$RecipeImpl instance) =>
       'title': instance.title,
       'image': instance.image,
       'readyInMinutes': instance.readyInMinutes,
+      'summary': instance.summary,
+      'spoonacularScore': instance.spoonacularScore,
+      'aggregateLikes': instance.aggregateLikes,
+      'cuisines': instance.cuisines,
+      'dishTypes': instance.dishTypes,
+      'diets': instance.diets,
     };

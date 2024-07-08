@@ -74,10 +74,13 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
             );
           } else {
             var recipe = controller.recipes[index];
-            return RecipeCardBig(
-              recipe: recipe,
-              width: Get.width,
-              margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
+            return TransparentGestureDetector(
+              onTap: () => controller.showRecipeDetails(recipe),
+              child: RecipeCardBig(
+                recipe: recipe,
+                width: Get.width,
+                margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
+              ),
             );
           }
         },

@@ -60,17 +60,20 @@ class MainPage extends GetView<MainController> {
       child: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemBuilder: (context, index) => Obx(() {
-            final width = Get.width - 56;
-            if (!controller.isTrendingRecipesLoading) {
-              var recipe = controller.trendingRecipes[index];
-              return RecipeCardBig(
+          final width = Get.width - 56;
+          if (!controller.isTrendingRecipesLoading) {
+            var recipe = controller.trendingRecipes[index];
+            return TransparentGestureDetector(
+              onTap: () => controller.showRecipeDetails(recipe),
+              child: RecipeCardBig(
                 recipe: recipe,
                 width: width,
-              );
-            } else {
-              return RecipeCardBig.shimmer(width);
-            }
-          }),
+              ),
+            );
+          } else {
+            return RecipeCardBig.shimmer(width);
+          }
+        }),
         itemCount: controller.isTrendingRecipesLoading ? 3 : controller.trendingRecipes.length,
         scrollDirection: Axis.horizontal,
       ),
@@ -89,7 +92,7 @@ class MainPage extends GetView<MainController> {
           return Obx(
             () {
               var isSelected = controller.selectedPopularCategoryId == index;
-              return GestureDetector(
+              return TransparentGestureDetector(
                 onTap: () => controller.setSelectedPopularCategoryId(index),
                 child: Container(
                   alignment: Alignment.center,
@@ -124,7 +127,10 @@ class MainPage extends GetView<MainController> {
         itemBuilder: (context, index) => Obx(() {
           if (!controller.isPopularRecipesCategoryLoading) {
             var recipe = controller.popularRecipesCategory[index];
-            return RecipeCardSmall(recipe);
+            return TransparentGestureDetector(
+              child: RecipeCardSmall(recipe),
+              onTap: ()=>controller.showRecipeDetails(recipe),
+            );
           } else {
             return RecipeCardSmall.shimmer();
           }
