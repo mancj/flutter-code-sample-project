@@ -8,6 +8,10 @@
 *.ap_
 *.aab
 
+### Generated dart files ###
+*.g.dart
+*.freezed.dart
+
 # Files for the ART/Dalvik VM
 *.dex
 
