@@ -8,8 +8,4 @@
 This code sample has two state management implementations - GetX and BLoC. 
 These implementations are located in `lib/presentation/<specific implementation>` folder. Each folder have its own readme.md file that indicates information for this specific SM and the work progress.
 
-<img src="readme_img/screenshot_1.png" width="300">
-<br>
-<img src="readme_img/screenshot_2.png" width="300">
-<br>
-<img src="readme_img/screenshot_3.png" width="300">
+![Cover.jpg](readme_img%2FCover.jpg)
