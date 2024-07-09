@@ -31,7 +31,7 @@ class UITextStyles {
   static const boldParagraph = TextStyle(
     color: UIColors.black,
     fontSize: 19,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w600,
   );
   static const boldLabel = TextStyle(
     color: UIColors.black,
@@ -45,5 +45,9 @@ class UITextStyles {
   static const regularSmall = TextStyle(
     color: UIColors.black,
     fontSize: 15,
+  );
+  static const regularTiny = TextStyle(
+    color: UIColors.black,
+    fontSize: 13,
   );
 }

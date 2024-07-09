@@ -6,4 +6,6 @@ abstract class IRecipeRestService {
   Future<List<Recipe>> fetchTrendingRecipes();
 
   Future<List<Recipe>> fetchRecipesByCategory(String category);
+
+  Future<Recipe> fetchRecipeDetails(int recipeId);
 }

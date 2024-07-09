@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
+import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/picker_bar.dart';
 import 'package:get/get.dart';
 
 import 'main_page_controller.dart';
@@ -81,40 +82,11 @@ class MainPage extends GetView<MainController> {
   }
 
   Widget _popularCategoryPicker() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: padding16),
-      width: double.infinity,
-      height: 46,
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: padding16),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return Obx(
-            () {
-              var isSelected = controller.selectedPopularCategoryId == index;
-              return TransparentGestureDetector(
-                onTap: () => controller.setSelectedPopularCategoryId(index),
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: padding16),
-                  margin: const EdgeInsets.only(right: padding8),
-                  decoration: BoxDecoration(
-                    color: isSelected ? UIColors.primary : null,
-                    borderRadius: BorderRadius.circular(padding12),
-                  ),
-                  child: Text(
-                    controller.popularCategories[index],
-                    style: UITextStyles.boldSmall.copyWith(
-                      color: isSelected ? UIColors.white : UIColors.primary40,
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
-        },
-        itemCount: controller.popularCategories.length,
-      ),
+    return PickerBarWidget(
+      items: controller.popularCategories,
+      onChanged: (int index) {
+        controller.setSelectedPopularCategoryId(index);
+      },
     );
   }
 
@@ -129,7 +101,7 @@ class MainPage extends GetView<MainController> {
             var recipe = controller.popularRecipesCategory[index];
             return TransparentGestureDetector(
               child: RecipeCardSmall(recipe),
-              onTap: ()=>controller.showRecipeDetails(recipe),
+              onTap: () => controller.showRecipeDetails(recipe),
             );
           } else {
             return RecipeCardSmall.shimmer();

@@ -44,6 +44,9 @@ _$RecipeImpl _$$RecipeImplFromJson(Map<String, dynamic> json) => _$RecipeImpl(
           .toList(),
       diets:
           (json['diets'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      analyzedInstructions: (json['analyzedInstructions'] as List<dynamic>?)
+          ?.map(AnalyzedInstruction.fromJson)
+          .toList(),
     );
 
 Map<String, dynamic> _$$RecipeImplToJson(_$RecipeImpl instance) =>
@@ -58,4 +61,5 @@ Map<String, dynamic> _$$RecipeImplToJson(_$RecipeImpl instance) =>
       'cuisines': instance.cuisines,
       'dishTypes': instance.dishTypes,
       'diets': instance.diets,
+      'analyzedInstructions': instance.analyzedInstructions,
     };

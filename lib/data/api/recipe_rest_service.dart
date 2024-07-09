@@ -46,4 +46,12 @@ class RecipeRestService implements IRecipeRestService {
     );
     return RecipeResults.fromJson(response.data).results;
   }
+
+  @override
+  Future<Recipe> fetchRecipeDetails(int recipeId) async {
+    final Response response = await _dio.get(
+      'recipes/$recipeId/information',
+    );
+    return Recipe.fromJson(response.data);
+  }
 }

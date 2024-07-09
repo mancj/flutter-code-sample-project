@@ -1,3 +1,4 @@
+import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -36,6 +37,7 @@ class Recipe with _$Recipe {
     List<String>? cuisines,
     List<String>? dishTypes,
     List<String>? diets,
+    List<AnalyzedInstruction>? analyzedInstructions,
   }) = _Recipe;
 
   factory Recipe.fromJson(dynamic json) => _$RecipeFromJson(json);
