@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_sample_app/data/api/cancelable_api_request.dart';
 import 'package:flutter_sample_app/domain/api/recipe_rest_service.dart';
-import 'package:flutter_sample_app/domain/model/recipe.dart';
-
-import 'constants.dart';
+import 'package:flutter_sample_app/domain/model/_model.dart';
 
 class RecipeRestService implements IRecipeRestService {
   final Dio _dio;
@@ -10,18 +9,21 @@ class RecipeRestService implements IRecipeRestService {
   RecipeRestService(this._dio);
 
   @override
-  Future<List<Recipe>> searchRecipes(String query, int limit, int offset) async {
-    var response = await _dio.get(
-      'recipes/complexSearch',
-      queryParameters: {
-        'query': query,
-        'addRecipeInformation': true,
-        'number': limit,
-        'offset': offset,
-      },
-    );
-    var recipes = RecipeResults.fromJson(response.data);
-    return recipes.results;
+  CancelableRequest<List<Recipe>> searchRecipes(String query, int limit, int offset) {
+    return CancelableApiRequest((token) async {
+      var response = await _dio.get(
+        cancelToken: token,
+        'recipes/complexSearch',
+        queryParameters: {
+          'query': query,
+          'addRecipeInformation': true,
+          'number': limit,
+          'offset': offset,
+        },
+      );
+      var recipes = RecipeResults.fromJson(response.data);
+      return recipes.results;
+    });
   }
 
   @override

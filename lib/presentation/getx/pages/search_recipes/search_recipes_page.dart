@@ -30,23 +30,21 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const UIMargin.vertical16(),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const UIPageTitle(
-                    title: 'Search',
-                    showBackButton: true,
-                  ),
-                  _resultsCountHeaderWidget(),
-                ],
-              ),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                UIPageTitle(title: 'Search', showBackButton: true),
+              ],
             ),
+            UIInputField(
+              controller: controller.searchController,
+              onSubmitted: (v) => controller.searchRecipes(v),
+            ),
+            _resultsCountHeaderWidget(),
             const UIMargin.vertical16(),
             _recipesList(),
           ],
@@ -55,25 +53,27 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
     );
   }
 
-  Padding _resultsCountHeaderWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16),
-      child: RichText(
-        text: TextSpan(
-          children: [
-            TextSpan(
-              text: '${controller.searchQuery} ',
-              style: UITextStyles.boldLabel.copyWith(
-                color: UIColors.black80,
+  Widget _resultsCountHeaderWidget() {
+    return Obx(
+      () => Padding(
+        padding: const EdgeInsets.only(left: 16),
+        child: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: '${controller.searchQuery} ',
+                style: UITextStyles.boldLabel.copyWith(
+                  color: UIColors.black80,
+                ),
               ),
-            ),
-            TextSpan(
-              text: 'results:',
-              style: UITextStyles.regularLabel.copyWith(
-                color: UIColors.black80,
+              TextSpan(
+                text: 'results:',
+                style: UITextStyles.regularLabel.copyWith(
+                  color: UIColors.black80,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -95,29 +95,6 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
             ),
           );
         }),
-      ),
-    );
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          if (controller.isLoading) {
-            return Container(
-              margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
-              child: RecipeCardBig.shimmer(double.infinity),
-            );
-          } else {
-            var recipe = controller.recipes[index];
-            return TransparentGestureDetector(
-              onTap: () => controller.showRecipeDetails(recipe),
-              child: RecipeCardBig(
-                recipe: recipe,
-                width: Get.width,
-                margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
-              ),
-            );
-          }
-        },
-        itemCount: controller.isLoading ? 3 : controller.recipes.length,
       ),
     );
   }

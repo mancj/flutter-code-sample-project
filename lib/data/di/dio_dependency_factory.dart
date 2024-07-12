@@ -9,7 +9,12 @@ class DioDependencyFactory extends IDependencyFactory<Dio> {
     return Dio(BaseOptions(baseUrl: 'https://api.spoonacular.com/'))
       ..interceptors.addAll(
         [
-          if (kDebugMode) LogInterceptor(responseBody: true),
+          if (kDebugMode && true)
+            LogInterceptor(
+              responseBody: true,
+              requestHeader: false,
+              responseHeader: false,
+            ),
           SpoonacularApiKeyInterceptor(),
         ],
       );

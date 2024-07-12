@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
-import 'package:flutter_sample_app/presentation/shared/resources/ui_colors.dart';
 
 class UIInputField extends StatelessWidget {
+  final TextEditingController? controller;
   final Function(String v)? onSubmitted;
+  final String hintText;
 
   const UIInputField({
     super.key,
     this.onSubmitted,
+    this.hintText = 'Search',
+    this.controller,
   });
 
   @override
@@ -20,9 +22,10 @@ class UIInputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: TextField(
+        controller: controller,
         onSubmitted: onSubmitted,
         decoration: InputDecoration(
-          hintText: 'Search',
+          hintText: hintText,
           hintStyle: const TextStyle(
             fontSize: 18,
             color: UIColors.neutral30,
