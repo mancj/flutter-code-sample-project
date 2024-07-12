@@ -50,4 +50,8 @@ class UITextStyles {
     color: UIColors.black,
     fontSize: 13,
   );
+  static const regularLabel = TextStyle(
+    color: UIColors.black,
+    fontSize: 16,
+  );
 }
