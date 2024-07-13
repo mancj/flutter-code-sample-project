@@ -9,7 +9,7 @@ class RecipeRestService implements IRecipeRestService {
   RecipeRestService(this._dio);
 
   @override
-  CancelableRequest<List<Recipe>> searchRecipes(String query, int limit, int offset) {
+  CancelableRequest<RecipeResults> searchRecipes(String query, int limit, int offset) {
     return CancelableApiRequest((token) async {
       var response = await _dio.get(
         cancelToken: token,
@@ -21,8 +21,7 @@ class RecipeRestService implements IRecipeRestService {
           'offset': offset,
         },
       );
-      var recipes = RecipeResults.fromJson(response.data);
-      return recipes.results;
+      return RecipeResults.fromJson(response.data);
     });
   }
 

@@ -10,6 +10,7 @@ part 'recipe.freezed.dart';
 class RecipeResults with _$RecipeResults {
   const factory RecipeResults({
     required List<Recipe> results,
+    required int totalResults,
   }) = _RecipeResults;
 
   factory RecipeResults.fromJson(dynamic json) => _$RecipeResultsFromJson(json);
