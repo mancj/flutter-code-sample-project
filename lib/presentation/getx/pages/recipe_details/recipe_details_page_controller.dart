@@ -34,7 +34,7 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
   }
 
   Future _fetchRecipeDetails() async {
-    withLoading(() async {
+    await execute(() async {
       _recipe.value = await _recipeRestService.fetchRecipeDetails(recipe.id);
       _extractIngredients();
     });

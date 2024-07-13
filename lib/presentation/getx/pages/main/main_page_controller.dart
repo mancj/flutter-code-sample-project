@@ -50,7 +50,13 @@ class MainController extends BaseController {
     super.onReady();
     _getTrendingRecipes();
     _getPopularRecipesCategory();
-    registerDisposables([_trendingRecipes, _selectedPopularCategoryId, _popularRecipesCategory]);
+    registerDisposables([
+      _trendingRecipes,
+      _selectedPopularCategoryId,
+      _popularRecipesCategory,
+      _isTrendingRecipesLoading,
+      _isPopularRecipesCategoryLoading,
+    ]);
   }
 
   void searchRecipes(String query) async {
@@ -61,18 +67,16 @@ class MainController extends BaseController {
   }
 
   void _getTrendingRecipes() async {
-    return execute(() async {
-      await withLoading(
-        () async {
-          _trendingRecipes.value = await _recipeRestService.fetchTrendingRecipes();
-        },
-        loadingFlag: _isTrendingRecipesLoading,
-      );
-    });
+    await execute(
+      () async {
+        _trendingRecipes.value = await _recipeRestService.fetchTrendingRecipes();
+      },
+      loadingFlag: _isTrendingRecipesLoading,
+    );
   }
 
   void _getPopularRecipesCategory() async {
-    await withLoading(
+    await execute(
       () async {
         var category = popularCategories[_selectedPopularCategoryId.value];
         _popularRecipesCategory.value = await _recipeRestService.fetchRecipesByCategory(category);

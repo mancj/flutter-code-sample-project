@@ -32,11 +32,12 @@ class BaseController extends GetxController {
   Future<void> execute<T>(
     Future<T> Function() call, {
     bool withLoading = true,
+    RxBool? loadingFlag,
     Function(dynamic e)? onError,
   }) async {
     try {
       if (withLoading) {
-        await this.withLoading(() => call());
+        await this.withLoading(() => call(), loadingFlag: loadingFlag);
       } else {
         await call();
       }
