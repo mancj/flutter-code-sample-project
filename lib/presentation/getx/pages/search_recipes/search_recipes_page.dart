@@ -126,7 +126,7 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
             );
           },
           firstPageErrorIndicatorBuilder: (c) {
-            return _errorPage();
+            return _errorPageWidget();
           },
           firstPageProgressIndicatorBuilder: (c) => const CircularProgressIndicator.adaptive(),
           newPageProgressIndicatorBuilder: (c) => const CircularProgressIndicator.adaptive(),
@@ -135,7 +135,7 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
     );
   }
 
-  Padding _errorPage() {
+  Widget _errorPageWidget() {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
