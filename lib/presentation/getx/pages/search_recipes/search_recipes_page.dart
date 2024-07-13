@@ -44,7 +44,9 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
               controller: controller.searchController,
               onSubmitted: (v) => controller.searchRecipes(v),
             ),
-            _resultsCountHeaderWidget(),
+            Obx(() {
+              return !controller.isLoading ? _resultsCountHeaderWidget() : _searchingTitleWidget();
+            }),
             const UIMargin.vertical16(),
             _recipesList(),
           ],
@@ -53,27 +55,55 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
     );
   }
 
+  Widget _searchingTitleWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Searching recipes for ',
+              style: UITextStyles.regularLabel.copyWith(color: UIColors.black80),
+            ),
+            TextSpan(
+              text: controller.searchQuery,
+              style: UITextStyles.boldLabel.copyWith(color: UIColors.black80),
+            ),
+            TextSpan(
+              text: ', please wait',
+              style: UITextStyles.regularLabel.copyWith(color: UIColors.black80),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _resultsCountHeaderWidget() {
-    return Obx(
-      () => Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: '${controller.searchQuery} ',
-                style: UITextStyles.boldLabel.copyWith(
-                  color: UIColors.black80,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 16),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: '${controller.resultsCount}',
+              style: UITextStyles.boldLabel.copyWith(
+                color: UIColors.black80,
               ),
-              TextSpan(
-                text: 'results:',
-                style: UITextStyles.regularLabel.copyWith(
-                  color: UIColors.black80,
-                ),
+            ),
+            TextSpan(
+              text: ' matches for ',
+              style: UITextStyles.regularLabel.copyWith(
+                color: UIColors.black80,
               ),
-            ],
-          ),
+            ),
+            TextSpan(
+              text: '${controller.searchQuery}:',
+              style: UITextStyles.boldLabel.copyWith(
+                color: UIColors.black80,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -82,19 +112,53 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
   Widget _recipesList() {
     return Expanded(
       child: PagedListView<int, Recipe>(
-        // itemCount: controller.isLoading ? 3 : controller.recipes.length,
         pagingController: controller.pagingController,
-        builderDelegate: PagedChildBuilderDelegate(itemBuilder: (BuildContext context, recipe, int index) {
-          // var recipe = controller.recipes[index];
-          return TransparentGestureDetector(
-            onTap: () => controller.showRecipeDetails(recipe),
-            child: RecipeCardBig(
-              recipe: recipe,
-              width: Get.width,
-              margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
+        builderDelegate: PagedChildBuilderDelegate(
+          itemBuilder: (BuildContext context, recipe, int index) {
+            // var recipe = controller.recipes[index];
+            return TransparentGestureDetector(
+              onTap: () => controller.showRecipeDetails(recipe),
+              child: RecipeCardBig(
+                recipe: recipe,
+                width: Get.width,
+                margin: const EdgeInsets.fromLTRB(padding16, padding0, padding16, padding32),
+              ),
+            );
+          },
+          firstPageErrorIndicatorBuilder: (c) {
+            return _errorPage();
+          },
+          firstPageProgressIndicatorBuilder: (c) => const CircularProgressIndicator.adaptive(),
+          newPageProgressIndicatorBuilder: (c) => const CircularProgressIndicator.adaptive(),
+        ),
+      ),
+    );
+  }
+
+  Padding _errorPage() {
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        children: [
+          const Text(
+            'Something went wrong',
+            style: UITextStyles.boldH5,
+          ),
+          const UIMargin.vertical(16),
+          Text(
+            'Couldn\'t load recipes due to unknown error. Please try again later',
+            style: UITextStyles.regularSmall.copyWith(color: UIColors.black60),
+            textAlign: TextAlign.center,
+          ),
+          const UIMargin.vertical(24),
+          FilledButton(
+            onPressed: () => controller.searchRecipes(controller.searchQuery, true),
+            child: Text(
+              'Try again',
+              style: UITextStyles.regularSmall.copyWith(color: UIColors.white),
             ),
-          );
-        }),
+          ),
+        ],
       ),
     );
   }

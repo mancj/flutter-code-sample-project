@@ -17,7 +17,6 @@ class CancelableApiRequest<T> extends CancelableRequest<T> {
   @override
   Future<T> run() async {
     logger.d('Run request with token ${cancelToken.hashCode} ${cancelToken.isCancelled}');
-    await Future.delayed(const Duration(seconds: 10));
     return await request(cancelToken);
   }
 }

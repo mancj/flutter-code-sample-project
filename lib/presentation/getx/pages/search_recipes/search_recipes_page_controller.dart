@@ -23,6 +23,8 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
 
   String get searchQuery => _searchQuery.value;
 
+  int get resultsCount => pagingController.itemList?.length ?? 0;
+
   late final PagingController<int, Recipe> pagingController;
   final TextEditingController searchController = TextEditingController();
   CancelableRequest<List<Recipe>>? _requestCancelable;
@@ -45,25 +47,28 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   }
 
   void _searchRecipes(int pageKey) async {
-    try {
-      var query = searchQuery;
-      logger.d('Search recipes with query: $query');
-      _cancelCurrentRequest();
-      _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
-      _streamSubscription = _requestCancelable!.run().asStream().listen((recipes) {
-        logger.d('Found ${recipes.length} recipes with query: $query');
-        final isLastPage = recipes.length < _paginationLimit;
-        if (isLastPage) {
-          pagingController.appendLastPage(recipes);
-        } else {
-          final nextPageKey = pageKey + recipes.length;
-          pagingController.appendPage(recipes, nextPageKey);
-        }
-        _requestCancelable = null;
+    isLoading = true;
+    var query = searchQuery;
+    logger.d('Search recipes with query: $query');
+    _cancelCurrentRequest();
+    _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
+    _streamSubscription = _requestCancelable!.run().asStream().listen((recipes) {
+      logger.d('Found ${recipes.length} recipes with query: $query');
+      final isLastPage = recipes.length < _paginationLimit;
+      if (isLastPage) {
+        pagingController.appendLastPage(recipes);
+      } else {
+        final nextPageKey = pageKey + recipes.length;
+        pagingController.appendPage(recipes, nextPageKey);
+      }
+      _requestCancelable = null;
+    })
+      ..onError((e) {
+        pagingController.error = e;
+      })
+      ..onDone(() {
+        isLoading = false;
       });
-    } catch (error) {
-      pagingController.error = error;
-    }
   }
 
   void _cancelCurrentRequest() {
@@ -78,10 +83,12 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
     );
   }
 
-  void searchRecipes(String v) {
-    _searchQuery.value = v.trim();
-    pagingController.refresh();
-    _searchRecipes(0);
+  void searchRecipes(String v, [bool force = false]) {
+    if (v != searchQuery || force) {
+      _searchQuery.value = v.trim();
+      pagingController.refresh();
+      _searchRecipes(0);
+    }
   }
 
   @override
