@@ -29,6 +29,7 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
   @override
   void onReady() {
     super.onReady();
+    registerDisposables([_selectedTab, _recipe, _ingredients]);
     _fetchRecipeDetails();
   }
 

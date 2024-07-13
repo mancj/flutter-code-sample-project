@@ -50,11 +50,7 @@ class MainController extends BaseController {
     super.onReady();
     _getTrendingRecipes();
     _getPopularRecipesCategory();
-    registerDisposables([
-      _trendingRecipes,
-      _selectedPopularCategoryId,
-      _popularRecipesCategory,
-    ]);
+    registerDisposables([_trendingRecipes, _selectedPopularCategoryId, _popularRecipesCategory]);
   }
 
   void searchRecipes(String query) async {

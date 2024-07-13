@@ -39,7 +39,7 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   void onReady() {
     super.onReady();
     _searchRecipes(0);
-    registerDisposable(_recipes);
+    registerDisposables([_recipes, _searchQuery, _resultsCount]);
     _searchQuery.value = args!.query;
     searchController.text = _searchQuery.value;
     pagingController.addPageRequestListener((pageKey) {
