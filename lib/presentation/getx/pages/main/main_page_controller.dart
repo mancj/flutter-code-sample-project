@@ -65,12 +65,14 @@ class MainController extends BaseController {
   }
 
   void _getTrendingRecipes() async {
-    await withLoading(
-      () async {
-        _trendingRecipes.value = await _recipeRestService.fetchTrendingRecipes();
-      },
-      loadingFlag: _isTrendingRecipesLoading,
-    );
+    return execute(() async {
+      await withLoading(
+        () async {
+          _trendingRecipes.value = await _recipeRestService.fetchTrendingRecipes();
+        },
+        loadingFlag: _isTrendingRecipesLoading,
+      );
+    });
   }
 
   void _getPopularRecipesCategory() async {

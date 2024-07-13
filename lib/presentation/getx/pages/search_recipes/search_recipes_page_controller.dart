@@ -47,28 +47,35 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   }
 
   void _searchRecipes(int pageKey) async {
-    isLoading = true;
-    var query = searchQuery;
-    logger.d('Search recipes with query: $query');
-    _cancelCurrentRequest();
-    _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
-    _streamSubscription = _requestCancelable!.run().asStream().listen((recipes) {
-      logger.d('Found ${recipes.length} recipes with query: $query');
-      final isLastPage = recipes.length < _paginationLimit;
-      if (isLastPage) {
-        pagingController.appendLastPage(recipes);
-      } else {
-        final nextPageKey = pageKey + recipes.length;
-        pagingController.appendPage(recipes, nextPageKey);
-      }
-      _requestCancelable = null;
-    })
-      ..onError((e) {
-        pagingController.error = e;
+    execute(() async {
+      isLoading = true;
+      var query = searchQuery;
+      logger.d('Search recipes with query: $query');
+      _cancelCurrentRequest();
+      _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
+      _streamSubscription = _requestCancelable!.run().asStream().listen((recipes) {
+        logger.d('Found ${recipes.length} recipes with query: $query');
+        final isLastPage = recipes.length < _paginationLimit;
+        if (isLastPage) {
+          pagingController.appendLastPage(recipes);
+        } else {
+          final nextPageKey = pageKey + recipes.length;
+          pagingController.appendPage(recipes, nextPageKey);
+        }
+        _requestCancelable = null;
       })
-      ..onDone(() {
-        isLoading = false;
-      });
+        ..onError((e) {
+          pagingController.error = e;
+        })
+        ..onDone(() {
+          isLoading = false;
+        });
+    });
+  }
+
+  @override
+  void showError(dynamic e, StackTrace? stacktrace) {
+    pagingController.error = e;
   }
 
   void _cancelCurrentRequest() {

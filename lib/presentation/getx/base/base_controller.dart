@@ -1,3 +1,4 @@
+import 'package:flutter_sample_app/presentation/shared/utils/logger.dart';
 import 'package:get/get.dart';
 
 class BaseController extends GetxController {
@@ -25,6 +26,34 @@ class BaseController extends GetxController {
     (loadingFlag ?? _isLoading).value = true;
     await func();
     (loadingFlag ?? _isLoading).value = false;
+  }
+
+  Future<void> execute<T>(
+    Future<T> Function() call, {
+    Function(dynamic e)? onError,
+  }) async {
+    try {
+      await call();
+    } catch (e, s) {
+      isLoading = false;
+      this.onError(e, s);
+      onError?.call(e);
+    }
+  }
+
+  void onError(dynamic e, StackTrace? stacktrace) {
+    logger.e(e, stackTrace: stacktrace);
+    logger.d('$stacktrace');
+    isLoading = false;
+    showError(e, stacktrace);
+  }
+
+  void showError(dynamic e, StackTrace? stacktrace) {
+    Get.snackbar(
+      'Something Went Wrong',
+      'An unexpected error occurred. Please try again later',
+      snackPosition: SnackPosition.BOTTOM,
+    ).show();
   }
 
   @override
