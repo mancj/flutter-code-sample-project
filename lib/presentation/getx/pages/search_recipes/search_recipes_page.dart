@@ -61,17 +61,17 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
       child: RichText(
         text: TextSpan(
           children: [
-            TextSpan(
+            const TextSpan(
               text: 'Searching recipes for ',
-              style: UITextStyles.regularLabel.copyWith(color: UIColors.black80),
+              style: UITextStyles.regularLabel,
             ),
             TextSpan(
               text: controller.searchQuery,
-              style: UITextStyles.boldLabel.copyWith(color: UIColors.black80),
+              style: UITextStyles.boldLabel,
             ),
-            TextSpan(
+            const TextSpan(
               text: ', please wait',
-              style: UITextStyles.regularLabel.copyWith(color: UIColors.black80),
+              style: UITextStyles.regularLabel,
             ),
           ],
         ),

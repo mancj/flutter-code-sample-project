@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_sample_app/presentation/shared/utils/logger.dart';
 import 'package:get/get.dart';
 
@@ -30,10 +31,15 @@ class BaseController extends GetxController {
 
   Future<void> execute<T>(
     Future<T> Function() call, {
+    bool withLoading = true,
     Function(dynamic e)? onError,
   }) async {
     try {
-      await call();
+      if (withLoading) {
+        await this.withLoading(() => call());
+      } else {
+        await call();
+      }
     } catch (e, s) {
       isLoading = false;
       this.onError(e, s);
@@ -42,10 +48,14 @@ class BaseController extends GetxController {
   }
 
   void onError(dynamic e, StackTrace? stacktrace) {
-    logger.e(e, stackTrace: stacktrace);
-    logger.d('$stacktrace');
-    isLoading = false;
-    showError(e, stacktrace);
+    if (CancelToken.isCancel(e)) {
+      logger.d('The request was manually cancelled by the user. $e');
+    } else {
+      logger.e(e, stackTrace: stacktrace);
+      logger.d('$stacktrace');
+      isLoading = false;
+      showError(e, stacktrace);
+    }
   }
 
   void showError(dynamic e, StackTrace? stacktrace) {

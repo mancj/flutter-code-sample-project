@@ -28,7 +28,6 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   late final PagingController<int, Recipe> pagingController;
   final TextEditingController searchController = TextEditingController();
   CancelableRequest<List<Recipe>>? _requestCancelable;
-  StreamSubscription? _streamSubscription;
 
   SearchRecipesController() {
     pagingController = PagingController<int, Recipe>(firstPageKey: 0);
@@ -48,28 +47,21 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
 
   void _searchRecipes(int pageKey) async {
     execute(() async {
-      isLoading = true;
       var query = searchQuery;
       logger.d('Search recipes with query: $query');
       _cancelCurrentRequest();
       _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
-      _streamSubscription = _requestCancelable!.run().asStream().listen((recipes) {
-        logger.d('Found ${recipes.length} recipes with query: $query');
-        final isLastPage = recipes.length < _paginationLimit;
-        if (isLastPage) {
-          pagingController.appendLastPage(recipes);
-        } else {
-          final nextPageKey = pageKey + recipes.length;
-          pagingController.appendPage(recipes, nextPageKey);
-        }
-        _requestCancelable = null;
-      })
-        ..onError((e) {
-          pagingController.error = e;
-        })
-        ..onDone(() {
-          isLoading = false;
-        });
+      var recipes = await _requestCancelable!.run();
+      logger.d('Found ${recipes.length} recipes with query: $query');
+      final isLastPage = recipes.length < _paginationLimit;
+      if (isLastPage) {
+        pagingController.appendLastPage(recipes);
+      } else {
+        final nextPageKey = pageKey + recipes.length;
+        pagingController.appendPage(recipes, nextPageKey);
+      }
+      _searchQuery.refresh();
+      _requestCancelable = null;
     });
   }
 
@@ -79,8 +71,8 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   }
 
   void _cancelCurrentRequest() {
-    _streamSubscription?.cancel();
     _requestCancelable?.cancel();
+    _requestCancelable = null;
   }
 
   void showRecipeDetails(Recipe recipe) {
@@ -94,7 +86,6 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
     if (v != searchQuery || force) {
       _searchQuery.value = v.trim();
       pagingController.refresh();
-      _searchRecipes(0);
     }
   }
 
