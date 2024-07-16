@@ -13,6 +13,10 @@ class UIMargin extends StatelessWidget {
       : horizontal = 0,
         vertical = padding16;
 
+  const UIMargin.vertical24({super.key})
+      : horizontal = 0,
+        vertical = padding16;
+
   const UIMargin.vertical12({super.key})
       : horizontal = 0,
         vertical = padding12;
