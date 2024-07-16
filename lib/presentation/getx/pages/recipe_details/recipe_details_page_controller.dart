@@ -35,6 +35,7 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
 
   Future _fetchRecipeDetails() async {
     await execute(() async {
+      await Future.delayed(1.seconds, () {}); // fake timeout
       _recipe.value = await _recipeRestService.fetchRecipeDetails(recipe.id);
       _extractIngredients();
     });

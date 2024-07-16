@@ -53,6 +53,7 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
       logger.d('Search recipes with query: $query');
       _cancelCurrentRequest();
       _requestCancelable = _recipeRestService.searchRecipes(_searchQuery.value, _paginationLimit, pageKey);
+      await Future.delayed(1.seconds, () {}); // fake timeout
       var results = await _requestCancelable!.run();
       var recipes = results.results;
       _resultsCount.value = results.totalResults;

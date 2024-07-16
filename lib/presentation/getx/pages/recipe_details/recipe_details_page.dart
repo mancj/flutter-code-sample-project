@@ -6,6 +6,7 @@ import 'package:flutter_sample_app/presentation/getx/pages/recipe_details/recipe
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/picker_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
 
@@ -52,12 +53,12 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                 ),
                 if (recipe.cuisines?.isNotEmpty == true)
                   _featuresList(
-                    Icons.flag_circle_rounded,
+                    UISVGAssets.soup,
                     recipe.cuisines!,
                   ),
                 if (recipe.dishTypes?.isNotEmpty == true)
                   _featuresList(
-                    Icons.no_food_rounded,
+                    UISVGAssets.salad,
                     recipe.dishTypes!,
                   ),
                 SizedBox(
@@ -144,9 +145,9 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: padding16),
-                  child: const Divider(color: UIColors.neutral10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: padding16),
+                  child: Divider(color: UIColors.neutral10),
                 ),
               ],
             ),
@@ -157,8 +158,16 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
 
   Widget _contentOrLoadingWidget({required String title, required Widget content}) {
     return controller.isLoading
-        ? const Center(
-            child: CircularProgressIndicator.adaptive(),
+        ? Container(
+            constraints: const BoxConstraints(minHeight: 180),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(UIImages.vegan, width: 100),
+                const Text('Crafting recipe', style: UITextStyles.boldLabel),
+                Text('Please wait', style: UITextStyles.regularSmall.copyWith(color: UIColors.black60)),
+              ],
+            ),
           )
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +181,7 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
           );
   }
 
-  Widget _featuresList(IconData icon, List<String> features) {
+  Widget _featuresList(String svgPath, List<String> features) {
     return Column(
       children: [
         Padding(
@@ -180,10 +189,10 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(icon, color: UIColors.primary),
+              SvgPicture.asset(svgPath, color: UIColors.primary, width: 32),
               Expanded(
                 child: SizedBox(
-                  height: 40,
+                  height: 46,
                   child: ListView.builder(
                     padding: const EdgeInsets.all(padding8),
                     scrollDirection: Axis.horizontal,
@@ -191,10 +200,15 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                       var cuisine = features[index];
                       return Container(
                         alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: UIColors.primary,
+                          borderRadius: BorderRadius.circular(padding12),
+                        ),
+                        margin: const EdgeInsets.only(right: padding8),
                         padding: const EdgeInsets.symmetric(horizontal: padding8),
                         child: Text(
-                          cuisine,
-                          style: UITextStyles.regularTiny,
+                          cuisine.capitalizeFirst!,
+                          style: UITextStyles.regularTiny.copyWith(color: UIColors.white),
                         ),
                       );
                     },
