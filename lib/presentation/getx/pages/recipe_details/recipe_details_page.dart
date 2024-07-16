@@ -214,7 +214,7 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                         padding: const EdgeInsets.symmetric(horizontal: padding8),
                         child: Text(
                           cuisine.capitalizeFirst!,
-                          style: UITextStyles.boldTiny.copyWith(color: UIColors.primary),
+                          style: UITextStyles.mediumTiny.copyWith(color: UIColors.primary),
                         ),
                       );
                     },
@@ -225,9 +225,9 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: padding16),
-          child: const DashedLineView(),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding16),
+          child: DashedLineView(),
         ),
       ],
     );

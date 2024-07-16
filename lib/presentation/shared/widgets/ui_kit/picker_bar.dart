@@ -49,7 +49,7 @@ class _PickerBarWidgetState extends State<PickerBarWidget> {
               child: Text(
                 widget.items[index],
                 style: UITextStyles.boldSmall.copyWith(
-                  color: isSelected ? UIColors.white : UIColors.primary40,
+                  color: isSelected ? UIColors.white : UIColors.primary80,
                 ),
               ),
             ),

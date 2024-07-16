@@ -8,6 +8,11 @@ class UITextStyles {
     fontSize: 13,
     fontWeight: FontWeight.bold,
   );
+  static const mediumTiny = TextStyle(
+    color: UIColors.black,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+  );
   static const boldSmall = TextStyle(
     color: UIColors.black,
     fontSize: 15,

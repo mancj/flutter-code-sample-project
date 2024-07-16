@@ -6,6 +6,8 @@ class UIColors {
   static const primary = Color(0xFFE23E3E);
   static const primary30 = Color(0x4DE23E3E);
   static const primary40 = Color(0x66E23E3E);
+  static const primary60 = Color(0x99E23E3E);
+  static const primary80 = Color(0xCCE23E3E);
   static const secondaryText = Color(0xFF83817E);
   static const hintText = Color(0xFFAAA9A5);
   static const pageBg = Color(0xFFFFFFFF);
