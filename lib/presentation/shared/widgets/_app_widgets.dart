@@ -5,6 +5,7 @@ export 'ui_kit/ui_input_field.dart';
 export 'ui_kit/ui_margin.dart';
 export 'ui_kit/unimplemented_dialog.dart';
 export 'ui_kit/transparent_gesture_detector.dart';
+export 'ui_kit/dashed_line.dart';
 
 /* App widgets */
 export 'app/recipe_card_big.dart';
