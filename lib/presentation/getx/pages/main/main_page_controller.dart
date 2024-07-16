@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_sample_app/domain/api/recipe_rest_service.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/getx/base/base_controller.dart';
@@ -32,6 +33,8 @@ class MainController extends BaseController {
 
   int get selectedPopularCategoryId => _selectedPopularCategoryId.value;
 
+final searchFieldController = TextEditingController();
+
   void setSelectedPopularCategoryId(int value) {
     _selectedPopularCategoryId.value = value;
     _getPopularRecipesCategory();
@@ -60,6 +63,7 @@ class MainController extends BaseController {
   }
 
   void searchRecipes(String query) async {
+    searchFieldController.clear();
     Get.toNamed(
       SearchRecipesPage.routeName,
       arguments: SearchRecipesPageArgs(query: query.trim()),

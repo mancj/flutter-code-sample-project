@@ -3,7 +3,7 @@
 ### GetX implementation of the app
 
 ### TODO
-- Single error handler
-- Handle API errors
-- Infinite search in following pages:
-  - Recipe search page
+- [ ] Handle no internet state
+- [ ] Handle API errors
+- [x] Infinite search in following pages:
+  - [x] Recipe search page

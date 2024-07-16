@@ -33,49 +33,48 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Obx(
-                () =>
-                Column(
-                  children: [
-                    UIPageTitle(
-                      title: controller.pageTitle,
-                      showBackButton: true,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.all(padding16),
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(padding12),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: controller.recipe.image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    if (recipe.cuisines?.isNotEmpty == true)
-                      _featuresList(
-                        UISVGAssets.soup,
-                        recipe.cuisines!,
-                      ),
-                    if (recipe.dishTypes?.isNotEmpty == true)
-                      _featuresList(
-                        UISVGAssets.salad,
-                        recipe.dishTypes!,
-                      ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PickerBarWidget(
-                        items: const ["Info", "Ingredients", "Steps"],
-                        onChanged: (int index) => controller.setSelectedTypeIndex(index),
-                      ),
-                    ),
-                    AnimatedSwitcher(
-                      // key: ValueKey(controller.selectedTab),
-                      duration: 300.milliseconds,
-                      child: _contentWidget(recipe),
-                    ),
-                  ],
+            () => Column(
+              children: [
+                UIPageTitle(
+                  title: controller.pageTitle,
+                  showBackButton: true,
                 ),
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.all(padding16),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(padding12),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.recipe.image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                if (recipe.cuisines?.isNotEmpty == true)
+                  _featuresList(
+                    UISVGAssets.soup,
+                    recipe.cuisines!,
+                  ),
+                if (recipe.dishTypes?.isNotEmpty == true)
+                  _featuresList(
+                    UISVGAssets.salad,
+                    recipe.dishTypes!,
+                  ),
+                SizedBox(
+                  width: double.infinity,
+                  child: PickerBarWidget(
+                    items: const ["Info", "Ingredients", "Steps"],
+                    onChanged: (int index) => controller.setSelectedTypeIndex(index),
+                  ),
+                ),
+                AnimatedSwitcher(
+                  // key: ValueKey(controller.selectedTab),
+                  duration: 300.milliseconds,
+                  child: _contentWidget(recipe),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -84,60 +83,57 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
 
   Widget _contentWidget(Recipe recipe) {
     return switch (controller.selectedTab) {
-      SelectedTabType.info =>
-          Padding(
-            padding: const EdgeInsets.all(padding16),
-            child: Html(
-              data: recipe.summary!,
-              style: {
-                'body': Style(fontSize: FontSize(17)),
-              },
-            ),
+      SelectedTabType.info => Padding(
+          padding: const EdgeInsets.all(padding16),
+          child: Html(
+            data: recipe.summary!,
+            style: {
+              'body': Style(fontSize: FontSize(17)),
+            },
           ),
-      SelectedTabType.ingredients =>
-          _contentOrLoadingWidget(
-            title: 'Ingredients',
-            content: IngredientsList(
-              ingredients: controller.ingredients,
-            ),
+        ),
+      SelectedTabType.ingredients => _contentOrLoadingWidget(
+          title: 'Ingredients',
+          content: IngredientsList(
+            ingredients: controller.ingredients,
           ),
-      SelectedTabType.steps =>
-          _contentOrLoadingWidget(
-            content: _steps(recipe),
-            title: 'Steps',
-          ),
+        ),
+      SelectedTabType.steps => _contentOrLoadingWidget(
+          content: _steps(recipe),
+          title: 'Steps',
+        ),
     };
   }
 
   Widget _steps(Recipe recipe) {
     return Column(
-      children: recipe.analyzedInstructions!
-          .expand((element) => element.steps)
-          .map(
-            (e) =>
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(padding16),
-                  child: Text(
-                    'Step ${e.number}:',
-                    style: UITextStyles.boldParagraph,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(padding16),
-                  child: Text(e.step),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(padding16, padding16, padding16, 0),
-                  child: Text('Ingredients:', style: UITextStyles.boldLabel),
-                ),
-                Wrap(
+      children: recipe.analyzedInstructions == null
+          ? List.empty()
+          : recipe.analyzedInstructions!
+              .expand((element) => element.steps)
+              .map(
+                (e) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...e.ingredients.map(
-                          (e) =>
-                          Padding(
+                    Padding(
+                      padding: const EdgeInsets.all(padding16),
+                      child: Text(
+                        'Step ${e.number}:',
+                        style: UITextStyles.boldParagraph,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(padding16),
+                      child: Text(e.step),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(padding16, padding16, padding16, 0),
+                      child: Text('Ingredients:', style: UITextStyles.boldLabel),
+                    ),
+                    Wrap(
+                      children: [
+                        ...e.ingredients.map(
+                          (e) => Padding(
                             padding: const EdgeInsets.all(padding8),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -148,43 +144,43 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                               ],
                             ),
                           ),
+                        ),
+                      ],
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(padding16),
+                      child: DashedLineView(color: UIColors.neutral20),
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(padding16),
-                  child: DashedLineView(color: UIColors.neutral20),
-                ),
-              ],
-            ),
-      )
-          .toList(),
+              )
+              .toList(),
     );
   }
 
   Widget _contentOrLoadingWidget({required String title, required Widget content}) {
     return controller.isLoading
         ? Container(
-      constraints: const BoxConstraints(minHeight: 180),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(UIImages.vegan, width: 100),
-          const Text('Crafting recipe', style: UITextStyles.boldLabel),
-          Text('Please wait', style: UITextStyles.regularSmall.copyWith(color: UIColors.black60)),
-        ],
-      ),
-    )
+            constraints: const BoxConstraints(minHeight: 180),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(UIImages.vegan, width: 100),
+                const Text('Crafting recipe', style: UITextStyles.boldLabel),
+                Text('Please wait', style: UITextStyles.regularSmall.copyWith(color: UIColors.black60)),
+              ],
+            ),
+          )
         : Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(padding16),
-          child: Text(title, style: UITextStyles.boldH5),
-        ),
-        content,
-      ],
-    );
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(padding16),
+                child: Text(title, style: UITextStyles.boldH5),
+              ),
+              content,
+            ],
+          );
   }
 
   Widget _featuresList(String svgPath, List<String> features) {

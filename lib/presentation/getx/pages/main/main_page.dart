@@ -28,6 +28,7 @@ class MainPage extends GetView<MainController> {
                   title: 'Find best recipes for cooking',
                 ),
                 UIInputField(
+                  controller: controller.searchFieldController,
                   onSubmitted: (query) => controller.searchRecipes(query),
                 ),
                 _sectionTitle('Trending recipes 🔥'),
