@@ -109,13 +109,21 @@ class RecipeCardSmall extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(padding12),
         clipBehavior: Clip.antiAlias,
+        alignment: Alignment.center,
         decoration: const ShapeDecoration(
           shape: CircleBorder(),
         ),
-        child: CachedNetworkImage(
-          imageUrl: recipe.image,
-          fit: BoxFit.cover,
-        ),
+        child: recipe.image != null
+            ? CachedNetworkImage(
+                imageUrl: recipe.image!,
+                fit: BoxFit.cover,
+              )
+            : SvgPicture.asset(
+                UISVGAssets.salad,
+                height: 56,
+                width: 56,
+                color: UIColors.primary,
+              ),
       ),
     );
   }

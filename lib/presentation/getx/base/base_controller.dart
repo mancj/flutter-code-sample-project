@@ -49,7 +49,7 @@ class BaseController extends GetxController {
   }
 
   void onError(dynamic e, StackTrace? stacktrace) {
-    if (CancelToken.isCancel(e)) {
+    if (e is DioException && CancelToken.isCancel(e)) {
       logger.d('The request was manually cancelled by the user. $e');
     } else {
       logger.e(e, stackTrace: stacktrace);

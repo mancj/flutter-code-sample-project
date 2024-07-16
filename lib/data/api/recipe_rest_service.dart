@@ -56,4 +56,17 @@ class RecipeRestService implements IRecipeRestService {
     );
     return Recipe.fromJson(response.data);
   }
+
+  @override
+  Future<List<Recipe>> fetchSimilarRecipes(int recipeId) async {
+    final Map<String, dynamic> queryParams = {
+      'addRecipeInformation': true,
+    };
+    final Response response = await _dio.get(
+      '/recipes/$recipeId/similar',
+      queryParameters: queryParams,
+    );
+    var recipes = (response.data as List<dynamic>).map((e) => Recipe.fromJson(e)).toList();
+    return recipes;
+  }
 }

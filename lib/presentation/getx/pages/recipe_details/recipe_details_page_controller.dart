@@ -22,6 +22,10 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
 
   List<Ingredient> get ingredients => _ingredients.value;
 
+  final _similarRecipes = RxList<Recipe>();
+
+  List<Recipe> get similarRecipes => _similarRecipes.value;
+
   void setSelectedTypeIndex(int index) {
     _selectedTab.value = SelectedTabType.values[index];
   }
@@ -31,6 +35,7 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
     super.onReady();
     registerDisposables([_selectedTab, _recipe, _ingredients]);
     _fetchRecipeDetails();
+    _fetchSimilarRecipes();
   }
 
   Future _fetchRecipeDetails() async {
@@ -38,6 +43,13 @@ class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDe
       await Future.delayed(1.seconds, () {}); // fake timeout
       _recipe.value = await _recipeRestService.fetchRecipeDetails(recipe.id);
       _extractIngredients();
+    });
+  }
+
+  Future _fetchSimilarRecipes() async {
+    await execute(() async {
+      await Future.delayed(1.seconds, () {}); // fake timeout
+      _similarRecipes.value = await _recipeRestService.fetchSimilarRecipes(recipe.id);
     });
   }
 

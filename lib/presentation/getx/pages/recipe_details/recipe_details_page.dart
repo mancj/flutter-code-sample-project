@@ -39,18 +39,19 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                   title: controller.pageTitle,
                   showBackButton: true,
                 ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.all(padding16),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(padding12),
+                if (controller.recipe.image != null)
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(padding16),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(padding12),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: controller.recipe.image!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: controller.recipe.image,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 if (recipe.cuisines?.isNotEmpty == true)
                   _featuresList(
                     UISVGAssets.soup,
@@ -73,11 +74,36 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
                   duration: 300.milliseconds,
                   child: _contentWidget(recipe),
                 ),
+                if (controller.similarRecipes.isNotEmpty) _similarRecipes(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Column _similarRecipes() {
+    return Column(
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(padding16),
+          child: Text('Similar recipes', style: UITextStyles.boldH5),
+        ),
+        SizedBox(
+          width: double.infinity,
+          height: 360,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(padding16),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              var recipe = controller.similarRecipes[index];
+              return RecipeCardSmall(recipe);
+            },
+            itemCount: controller.similarRecipes.length,
+          ),
+        ),
+      ],
     );
   }
 

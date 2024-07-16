@@ -65,19 +65,20 @@ class RecipeCardBig extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  clipBehavior: Clip.antiAlias,
-                  height: _height,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: UIColors.neutral20,
+                if (recipe.image != null)
+                  Container(
+                    clipBehavior: Clip.antiAlias,
+                    height: _height,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: UIColors.neutral20,
+                    ),
+                    child: CachedNetworkImage(
+                      width: double.infinity,
+                      imageUrl: recipe.image!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: CachedNetworkImage(
-                    width: double.infinity,
-                    imageUrl: recipe.image,
-                    fit: BoxFit.cover,
-                  ),
-                ),
                 const UIMargin.vertical12(),
                 Text(
                   recipe.title,

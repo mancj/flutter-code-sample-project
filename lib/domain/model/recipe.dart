@@ -30,7 +30,7 @@ class Recipe with _$Recipe {
   const factory Recipe({
     required int id,
     required String title,
-    required String image,
+    required String? image,
     required int readyInMinutes,
     String? summary,
     double? spoonacularScore,
