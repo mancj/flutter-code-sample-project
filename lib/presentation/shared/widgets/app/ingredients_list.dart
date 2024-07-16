@@ -29,7 +29,7 @@ class IngredientsList extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: padding12),
         padding: const EdgeInsets.all(padding16),
         decoration: BoxDecoration(
-          color: UIColors.neutral10,
+          color: UIColors.neutral5,
           borderRadius: BorderRadius.circular(padding12),
         ),
         child: Row(

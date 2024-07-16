@@ -15,6 +15,7 @@ class UIColors {
   static const neutral30 = Color(0xFFC1C1C1);
   static const neutral20 = Color(0xFFD9D9D9);
   static const neutral10 = Color(0xFFF1F1F1);
+  static const neutral5 = Color(0xFFF7F7F7);
 
   static const primaryButtonGradient = [
     Color(0xFFFDCEB4),
