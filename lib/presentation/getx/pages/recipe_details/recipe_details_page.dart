@@ -122,6 +122,7 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
           title: 'Ingredients',
           content: IngredientsList(
             ingredients: controller.ingredients,
+            onTapIngredient: (ingredient) => controller.showIngredientDetails(ingredient),
           ),
         ),
       SelectedTabType.steps => _contentOrLoadingWidget(

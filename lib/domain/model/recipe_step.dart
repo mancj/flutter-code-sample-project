@@ -1,3 +1,4 @@
+import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe_step.freezed.dart';
@@ -13,18 +14,6 @@ class RecipeStep with _$RecipeStep {
   }) = _RecipeStep;
 
   factory RecipeStep.fromJson(Map<String, dynamic> json) => _$RecipeStepFromJson(json);
-}
-
-@freezed
-class Ingredient with _$Ingredient {
-  const factory Ingredient({
-    required int id,
-    required String name,
-    required String localizedName,
-    required String image,
-  }) = _Ingredient;
-
-  factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
 }
 
 @freezed

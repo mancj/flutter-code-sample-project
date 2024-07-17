@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sample_app/presentation/getx/app_binding.dart';
+import 'package:flutter_sample_app/presentation/getx/pages/ingredient_details/ingredient_details_page.dart';
 import 'package:flutter_sample_app/presentation/getx/pages/main/main_page.dart';
 import 'package:flutter_sample_app/presentation/getx/pages/recipe_details/recipe_details_page.dart';
 import 'package:flutter_sample_app/presentation/getx/pages/search_recipes/search_recipes_page.dart';
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
           name: RecipeDetailsPage.routeName,
           page: () => const RecipeDetailsPage(),
           binding: RecipeDetailsPageBinding(),
+        ),
+        GetPage(
+          name: IngredientDetailsPage.routeName,
+          page: () => const IngredientDetailsPage(),
+          binding: IngredientDetailsPageBinding(),
         ),
       ],
       // home: BpmMeasureTestPage(),

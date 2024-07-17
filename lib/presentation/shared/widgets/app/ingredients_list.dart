@@ -2,13 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
+import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/ui_margin.dart';
 import 'package:get/get.dart';
 
 class IngredientsList extends StatelessWidget {
   final List<Ingredient> ingredients;
+  final Function(Ingredient) onTapIngredient;
 
-  const IngredientsList({super.key, required this.ingredients});
+  const IngredientsList({
+    super.key,
+    required this.ingredients,
+    required this.onTapIngredient,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +30,10 @@ class IngredientsList extends StatelessWidget {
     );
   }
 
-  Container _ingredientWidget(Ingredient ingredient) {
-    return Container(
+  Widget _ingredientWidget(Ingredient ingredient) {
+    return TransparentGestureDetector(
+      onTap: () => onTapIngredient(ingredient),
+      child: Container(
         margin: const EdgeInsets.only(bottom: padding12),
         padding: const EdgeInsets.all(padding16),
         decoration: BoxDecoration(
@@ -55,6 +63,7 @@ class IngredientsList extends StatelessWidget {
             ),
           ],
         ),
-      );
+      ),
+    );
   }
 }

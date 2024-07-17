@@ -69,4 +69,16 @@ class RecipeRestService implements IRecipeRestService {
     var recipes = (response.data as List<dynamic>).map((e) => Recipe.fromJson(e)).toList();
     return recipes;
   }
+
+  @override
+  Future<IngredientDetails> fetchIngredientDetails(int ingredientId) async {
+    final Map<String, dynamic> queryParams = {
+      'addRecipeInformation': true,
+    };
+    final Response response = await _dio.get(
+      '/food/ingredients/$ingredientId/information',
+      queryParameters: queryParams,
+    );
+    return IngredientDetails.fromJson(response.data);
+  }
 }
