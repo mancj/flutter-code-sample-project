@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
-import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/ui_margin.dart';
 import 'package:get/get.dart';
 
 class IngredientsList extends StatelessWidget {
+  final String imageURL;
   final List<Ingredient> ingredients;
   final Function(Ingredient) onTapIngredient;
 
@@ -14,6 +14,7 @@ class IngredientsList extends StatelessWidget {
     super.key,
     required this.ingredients,
     required this.onTapIngredient,
+    required this.imageURL,
   });
 
   @override
@@ -51,7 +52,7 @@ class IngredientsList extends StatelessWidget {
                 color: UIColors.white,
               ),
               child: CachedNetworkImage(
-                imageUrl: ingredient.image,
+                imageUrl: '${imageURL}/${ingredient.image}',
                 fit: BoxFit.contain,
                 fadeInDuration: 100.milliseconds,
               ),

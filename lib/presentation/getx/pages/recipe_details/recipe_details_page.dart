@@ -123,6 +123,7 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
           content: IngredientsList(
             ingredients: controller.ingredients,
             onTapIngredient: (ingredient) => controller.showIngredientDetails(ingredient),
+            imageURL: controller.ingredientsImageUrl,
           ),
         ),
       SelectedTabType.steps => _contentOrLoadingWidget(

@@ -7,6 +7,8 @@ import 'package:flutter_sample_app/presentation/getx/pages/recipe_details/recipe
 import 'package:get/get.dart';
 
 class RecipeDetailsController extends BaseController with PageArgsMixin<RecipeDetailsPageArgs> {
+  String get ingredientsImageUrl => _recipeRestService.ingredientsImageUrl;
+
   final IRecipeRestService _recipeRestService = Get.find();
 
   String get pageTitle => args!.recipe.title;

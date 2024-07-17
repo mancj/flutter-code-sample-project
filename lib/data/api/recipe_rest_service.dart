@@ -5,6 +5,7 @@ import 'package:flutter_sample_app/domain/model/_model.dart';
 
 class RecipeRestService implements IRecipeRestService {
   final Dio _dio;
+  static const ingredientsImageURL = 'https://img.spoonacular.com/ingredients_100x100';
 
   RecipeRestService(this._dio);
 
@@ -81,4 +82,7 @@ class RecipeRestService implements IRecipeRestService {
     );
     return IngredientDetails.fromJson(response.data);
   }
+
+  @override
+  String get ingredientsImageUrl => ingredientsImageURL;
 }

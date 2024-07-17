@@ -1,6 +1,8 @@
 import 'package:flutter_sample_app/domain/model/_model.dart';
 
 abstract class IRecipeRestService {
+  String get ingredientsImageUrl;
+
   CancelableRequest<RecipeResults> searchRecipes(String query, int limit, int offset);
 
   Future<List<Recipe>> fetchTrendingRecipes();
@@ -12,5 +14,4 @@ abstract class IRecipeRestService {
   Future<List<Recipe>> fetchSimilarRecipes(int recipeId);
 
   Future<IngredientDetails> fetchIngredientDetails(int ingredientId);
-
 }

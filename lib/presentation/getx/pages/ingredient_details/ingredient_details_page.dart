@@ -1,7 +1,3 @@
-export 'ingredient_details_page_controller.dart';
-export 'ingredient_details_page_binding.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
@@ -9,8 +5,11 @@ import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/loading_indicator.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+
 import 'ingredient_details_page_controller.dart';
+
+export 'ingredient_details_page_binding.dart';
+export 'ingredient_details_page_controller.dart';
 
 part 'ingredient_details_page.freezed.dart';
 
@@ -54,10 +53,21 @@ class IngredientDetailsPage extends GetView<IngredientDetailsController> {
 
   Widget _ingredientDetailsWidget() {
     var ingredient = controller.ingredient!;
-    return Column(
-      children: [
-        Text(ingredient.localizedName ?? ingredient.name ?? ""),
-      ],
+    return const Padding(
+      padding: EdgeInsets.all(padding24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Oops', style: UITextStyles.boldLabel),
+          UIMargin.vertical8(),
+          Text(
+            'The recipe API does not provide sufficient information for most ingredients, '
+            'so this screen is not yet implemented.',
+            textAlign: TextAlign.center,
+            style: UITextStyles.regularTiny,
+          ),
+        ],
+      ),
     );
   }
 }
