@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_sample_app/data/api/models/spoonacular_error.dart';
+import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/utils/logger.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +10,7 @@ class BaseController extends GetxController {
   final List<RxInterface> disposables = List.empty(growable: true);
 
   bool get isLoading => _isLoading.value;
+  SnackbarController? _errorSnackbar;
 
   set isLoading(bool value) {
     _isLoading.value = value;
@@ -49,8 +53,12 @@ class BaseController extends GetxController {
   }
 
   void onError(dynamic e, StackTrace? stacktrace) {
-    if (e is DioException && CancelToken.isCancel(e)) {
-      logger.d('The request was manually cancelled by the user. $e');
+    if (e is DioException) {
+      if (CancelToken.isCancel(e)) {
+        logger.d('The request was manually cancelled by the user. $e');
+      } else {
+        showError(e, stacktrace);
+      }
     } else {
       logger.e(e, stackTrace: stacktrace);
       logger.d('$stacktrace');
@@ -59,12 +67,27 @@ class BaseController extends GetxController {
     }
   }
 
-  void showError(dynamic e, StackTrace? stacktrace) {
-    Get.snackbar(
-      'Something Went Wrong',
-      'An unexpected error occurred. Please try again later',
+  Future showError(dynamic e, StackTrace? stacktrace) async {
+    String title = 'Something Went Wrong';
+    String message = 'An unexpected error occurred. Please try again later';
+    try {
+      var spoonacularError = SpoonacularError.fromJson(e.response?.data);
+      message = spoonacularError.message;
+    } catch (e) {
+      print(e);
+    }
+
+    if(Get.isSnackbarOpen) {
+      await _errorSnackbar?.close();
+      _errorSnackbar = null;
+    }
+    _errorSnackbar = Get.snackbar(
+      title,
+      message,
       snackPosition: SnackPosition.BOTTOM,
-    ).show();
+      margin: const EdgeInsets.all(16.0),
+      duration: const Duration(seconds: 3),
+    );
   }
 
   @override

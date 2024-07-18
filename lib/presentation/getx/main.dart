@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "Poppins",
-        useMaterial3: true,
+        useMaterial3: false,
         scaffoldBackgroundColor: UIColors.pageBg,
         primaryColor: UIColors.primary,
         filledButtonTheme: FilledButtonThemeData(

@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
+import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/transparent_gesture_detector.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/unimplemented_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
@@ -72,7 +73,7 @@ class RecipeCardSmall extends StatelessWidget {
                       style: UITextStyles.boldSmall,
                     ),
                     const Spacer(),
-                    GestureDetector(
+                    TransparentGestureDetector(
                       onTap: showUnimplementedDialog,
                       child: SvgPicture.asset(
                         UISVGAssets.bookmark,

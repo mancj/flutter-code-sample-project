@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/picker_bar.dart';
+import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/transparent_gesture_detector.dart';
 import 'package:get/get.dart';
 
 import 'main_page_controller.dart';
@@ -19,24 +21,30 @@ class MainPage extends GetView<MainController> {
     return Scaffold(
       body: SafeArea(
         child: Obx(
-          () => SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const UIPageTitle(
-                  title: 'Find best recipes for cooking',
-                ),
-                UIInputField(
-                  controller: controller.searchFieldController,
-                  onSubmitted: (query) => controller.searchRecipes(query),
-                ),
-                _sectionTitle('Trending recipes 🔥'),
-                _trendingRecipes(),
-                _sectionTitle('Popular category'),
-                _popularCategoryPicker(),
-                _popularRecipesCategory(),
-              ],
+          () => RefreshIndicator(
+            displacement: 20,
+            onRefresh: () async {
+              controller.refreshPage();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const UIPageTitle(
+                    title: 'Find best recipes for cooking',
+                  ),
+                  UIInputField(
+                    controller: controller.searchFieldController,
+                    onSubmitted: (query) => controller.searchRecipes(query),
+                  ),
+                  _sectionTitle('Trending recipes 🔥'),
+                  _trendingRecipes(),
+                  _sectionTitle('Popular category'),
+                  _popularCategoryPicker(),
+                  _popularRecipesCategory(),
+                ],
+              ),
             ),
           ),
         ),
@@ -48,9 +56,29 @@ class MainPage extends GetView<MainController> {
     return Container(
       padding: const EdgeInsets.only(left: 16),
       alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: UITextStyles.boldH5,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: UITextStyles.boldH5,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          TransparentGestureDetector(
+            onTap: () => showUnimplementedDialog(),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'See all',
+                style: UITextStyles.mediumSmall.copyWith(
+                  color: UIColors.primary,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

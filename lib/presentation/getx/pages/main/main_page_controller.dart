@@ -33,7 +33,7 @@ class MainController extends BaseController {
 
   int get selectedPopularCategoryId => _selectedPopularCategoryId.value;
 
-final searchFieldController = TextEditingController();
+  final searchFieldController = TextEditingController();
 
   void setSelectedPopularCategoryId(int value) {
     _selectedPopularCategoryId.value = value;
@@ -70,7 +70,7 @@ final searchFieldController = TextEditingController();
     );
   }
 
-  void _getTrendingRecipes() async {
+  Future<void> _getTrendingRecipes() async {
     await execute(
       () async {
         _trendingRecipes.value = await _recipeRestService.fetchTrendingRecipes();
@@ -79,7 +79,7 @@ final searchFieldController = TextEditingController();
     );
   }
 
-  void _getPopularRecipesCategory() async {
+  Future<void> _getPopularRecipesCategory() async {
     await execute(
       () async {
         var category = popularCategories[_selectedPopularCategoryId.value];
@@ -95,5 +95,12 @@ final searchFieldController = TextEditingController();
       RecipeDetailsPage.routeName,
       arguments: RecipeDetailsPageArgs(recipe: recipe),
     );
+  }
+
+  Future<void> refreshPage() async {
+    _isTrendingRecipesLoading.value = true;
+    _isPopularRecipesCategoryLoading.value = true;
+    await _getTrendingRecipes();
+    await _getPopularRecipesCategory();
   }
 }

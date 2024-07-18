@@ -71,7 +71,7 @@ class SearchRecipesController extends BaseController with PageArgsMixin<SearchRe
   }
 
   @override
-  void showError(dynamic e, StackTrace? stacktrace) {
+  Future showError(dynamic e, StackTrace? stacktrace) async {
     pagingController.error = e;
   }
 

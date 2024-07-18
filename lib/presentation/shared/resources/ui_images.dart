@@ -4,6 +4,7 @@ class UIImages {
   static final sample = _jpg("splash");
   static final vegan = _gif("vegan");
   static final vegan_food = _gif("vegan-food");
+  static final work_in_progress = _gif("work-in-progress");
 
   static String _png(String img) {
     return "assets/img/$img.png";

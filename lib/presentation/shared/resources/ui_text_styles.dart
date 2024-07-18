@@ -13,6 +13,11 @@ class UITextStyles {
     fontSize: 13,
     fontWeight: FontWeight.w600,
   );
+  static const mediumSmall = TextStyle(
+    color: UIColors.black,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+  );
   static const boldSmall = TextStyle(
     color: UIColors.black,
     fontSize: 15,

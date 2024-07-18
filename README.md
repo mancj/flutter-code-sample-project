@@ -16,3 +16,4 @@ These implementations are located in `lib/presentation/<specific implementation>
 - **Infinite scrolling** Search recipe page
 - **Custom paint**: see `DashedLineWidget`
 - **Progress animations**
+- **Pull to refresh**
