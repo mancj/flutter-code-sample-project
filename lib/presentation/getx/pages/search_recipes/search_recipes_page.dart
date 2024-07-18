@@ -60,6 +60,7 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
       padding: const EdgeInsets.only(left: 16),
       child: RichText(
         text: TextSpan(
+          style: UITextStyles.regularLabel,
           children: [
             const TextSpan(
               text: 'Searching recipes for ',
@@ -136,15 +137,11 @@ class SearchRecipesPage extends GetView<SearchRecipesController> {
   }
 
   Widget _progressView() {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 180),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(UIImages.vegan, width: 100),
-          const Text('Searching recipes', style: UITextStyles.boldLabel),
-          Text('Please wait', style: UITextStyles.regularSmall.copyWith(color: UIColors.black60)),
-        ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 300),
+      child: LoadingIndicator(
+        title: 'Searching recipe',
+        imageAsset: UIImages.vegan,
       ),
     );
   }

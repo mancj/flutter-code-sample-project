@@ -5,6 +5,7 @@ import 'package:flutter_sample_app/domain/model/_model.dart';
 import 'package:flutter_sample_app/presentation/getx/pages/recipe_details/recipe_details_page.dart';
 import 'package:flutter_sample_app/presentation/shared/resources/_ui_resources.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/_app_widgets.dart';
+import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/loading_indicator.dart';
 import 'package:flutter_sample_app/presentation/shared/widgets/ui_kit/picker_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -188,15 +189,11 @@ class RecipeDetailsPage extends GetView<RecipeDetailsController> {
 
   Widget _contentOrLoadingWidget({required String title, required Widget content}) {
     return controller.isLoading
-        ? Container(
-            constraints: const BoxConstraints(minHeight: 180),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(UIImages.vegan, width: 100),
-                const Text('Crafting recipe', style: UITextStyles.boldLabel),
-                Text('Please wait', style: UITextStyles.regularSmall.copyWith(color: UIColors.black60)),
-              ],
+        ? ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 300),
+            child: LoadingIndicator(
+              title: 'Crafting recipe',
+              imageAsset: UIImages.vegan,
             ),
           )
         : Column(
